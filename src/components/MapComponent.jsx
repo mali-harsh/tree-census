@@ -130,82 +130,110 @@ const MapComponent = ({
   };
 
   return (
-    <div className="h-full relative bg-gray-100">
+    <div className="w-full h-full relative bg-gray-100 dark:bg-gray-900">
       {/* Leaflet map container */}
       <div 
         ref={mapContainer}
         className="w-full h-full"
         style={{ position: 'relative' }}
       />
-
-      {/* Custom Zoom Controls (overlaid on map) */}
-      <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-3 space-y-2 border border-white/50 z-40">
+  
+      {/* Custom Zoom Controls (mobile-optimized) */}
+      <div className="absolute top-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl shadow-lg p-2 space-y-1 border border-white/50 dark:border-gray-700/50 z-40">
         <button 
           onClick={handleZoomIn}
-          className="block w-12 h-12 bg-white rounded-xl hover:bg-green-50 hover:shadow-lg active:bg-green-100 transition-all font-bold text-xl border border-gray-200 flex items-center justify-center cursor-pointer"
+          className="block w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-gray-700 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/30 hover:shadow-lg active:bg-green-100 dark:active:bg-green-900/50 transition-all font-bold text-xl sm:text-2xl border border-gray-200 dark:border-gray-600 flex items-center justify-center cursor-pointer select-none"
           title="Zoom In"
+          aria-label="Zoom in"
         >
           +
         </button>
         <button 
           onClick={handleZoomOut}
-          className="block w-12 h-12 bg-white rounded-xl hover:bg-green-50 hover:shadow-lg active:bg-green-100 transition-all font-bold text-xl border border-gray-200 flex items-center justify-center cursor-pointer"
+          className="block w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-gray-700 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/30 hover:shadow-lg active:bg-green-100 dark:active:bg-green-900/50 transition-all font-bold text-xl sm:text-2xl border border-gray-200 dark:border-gray-600 flex items-center justify-center cursor-pointer select-none"
           title="Zoom Out"
+          aria-label="Zoom out"
         >
           −
         </button>
       </div>
-
-      {/* Tree Info Card */}
+  
+      {/* Tree Info Card - Mobile Optimized */}
       {selectedTree && (
-        <div className="absolute bottom-6 left-6 right-6 lg:right-auto lg:w-96 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 p-6 z-30">
-          <div className="flex justify-between items-start mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg text-white font-bold`}
+        <div className="absolute bottom-6 left-6 right-6 lg:right-auto lg:w-96 bg-white/97 dark:bg-gray-800/97 backdrop-blur-xl rounded-2xl shadow-xl border border-white/50 dark:border-gray-700/50 p-4 sm:p-6 z-30 animate-slideInUp max-h-[70vh] overflow-y-auto">
+          <div className="flex justify-between items-start gap-3 mb-4">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-lg text-white font-bold flex-shrink-0 text-2xl"
                 style={{
-                  background: selectedTree.condition === 'Excellent' ? '#22c55e' :
-                             selectedTree.condition === 'Good' ? '#3b82f6' :
-                             selectedTree.condition === 'Fair' ? '#eab308' : '#ef4444'
-                }}>
+                  background:
+                    selectedTree.condition === 'Excellent'
+                      ? '#22c55e'
+                      : selectedTree.condition === 'Good'
+                      ? '#3b82f6'
+                      : selectedTree.condition === 'Fair'
+                      ? '#eab308'
+                      : '#ef4444',
+                }}
+              >
                 🌳
               </div>
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800">{selectedTree.species}</h3>
-                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold mt-1 text-white`}
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg sm:text-2xl font-bold text-gray-800 dark:text-white truncate">
+                  {selectedTree.species}
+                </h3>
+                <div
+                  className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold mt-1 text-white"
                   style={{
-                    background: selectedTree.condition === 'Excellent' ? '#22c55e' :
-                               selectedTree.condition === 'Good' ? '#3b82f6' :
-                               selectedTree.condition === 'Fair' ? '#eab308' : '#ef4444'
-                  }}>
+                    background:
+                      selectedTree.condition === 'Excellent'
+                        ? '#22c55e'
+                        : selectedTree.condition === 'Good'
+                        ? '#3b82f6'
+                        : selectedTree.condition === 'Fair'
+                        ? '#eab308'
+                        : '#ef4444',
+                  }}
+                >
                   {selectedTree.condition}
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="grid grid-cols-2 gap-4 text-sm">
+  
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-600">Tree ID:</span>
-                <span className="font-bold text-gray-900">{selectedTree.id}</span>
+                <span className="text-gray-600 dark:text-gray-400">Tree ID:</span>
+                <span className="font-bold text-gray-900 dark:text-white">
+                  {selectedTree.id}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Height:</span>
-                <span className="font-bold text-green-700">{selectedTree.height}m</span>
+                <span className="text-gray-600 dark:text-gray-400">Height:</span>
+                <span className="font-bold text-green-700 dark:text-green-400">
+                  {selectedTree.height}m
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Planted:</span>
-                <span className="font-bold text-gray-900">{selectedTree.planted}</span>
+                <span className="text-gray-600 dark:text-gray-400">Planted:</span>
+                <span className="font-bold text-gray-900 dark:text-white">
+                  {selectedTree.planted}
+                </span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-600">Diameter:</span>
-                <span className="font-bold text-blue-700">{selectedTree.diameter}cm</span>
+                <span className="text-gray-600 dark:text-gray-400">Diameter:</span>
+                <span className="font-bold text-blue-700 dark:text-blue-400">
+                  {selectedTree.diameter}cm
+                </span>
               </div>
-              <div className="flex justify-between pt-2 border-t">
-                <span className="text-gray-600">Location:</span>
-                <span className="font-bold text-gray-900">{selectedTree.address}</span>
+              <div className="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">Location:</span>
+                <span className="font-bold text-gray-900 dark:text-white text-right">
+                  {selectedTree.address}
+                </span>
               </div>
             </div>
           </div>
