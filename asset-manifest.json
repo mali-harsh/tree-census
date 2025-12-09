@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tree-census/static/css/main.0e12c20a.css",
+    "main.js": "/tree-census/static/js/main.4a16c3a5.js",
+    "index.html": "/tree-census/index.html",
+    "main.0e12c20a.css.map": "/tree-census/static/css/main.0e12c20a.css.map",
+    "main.4a16c3a5.js.map": "/tree-census/static/js/main.4a16c3a5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e12c20a.css",
+    "static/js/main.4a16c3a5.js"
+  ]
+}
