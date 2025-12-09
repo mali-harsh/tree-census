@@ -1,0 +1,14 @@
+# Initialize the repo (only if not already initialized)
+git init
+
+# Set the remote to your GitHub repo using your SSH alias
+git remote set-url origin git@github-personal:mali-harsh/tree-census.git
+
+# Stage all files
+git add .
+
+# Commit with a message
+git commit -m "Initial tree census app"
+
+# Push to the main branch and set upstream
+git push -u origin main
