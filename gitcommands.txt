@@ -12,3 +12,6 @@ git commit -m "Initial tree census app"
 
 # Push to the main branch and set upstream
 git push -u origin main
+
+cd ~/tree-census
+npm run deploy
