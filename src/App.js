@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Search, Menu, X, BarChart3, Database } from 'lucide-react';
+import MapComponent from './components/MapComponent';
+
 
 const generateSampleTrees = () => {
   const species = ['Elm', 'Cedar', 'Birch', 'Pine', 'Oak', 'Maple', 'Ash', 'Willow'];
@@ -218,111 +220,17 @@ const TreeCensusApp = () => {
         {/* Main Content Area */}
         <main className="flex-1 overflow-hidden relative">
           {currentView === 'map' && (
-            <div className="h-full relative bg-gradient-to-br from-green-50 to-blue-50">
-              <div className="absolute inset-0 overflow-hidden">
-                <div 
-                  className="w-full h-full relative" 
-                  style={{ 
-                    backgroundImage: 'linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)',
-                    backgroundSize: '40px 40px'
-                  }}
-                >
-                  {filteredTrees.map(tree => {
-                    const x = Math.max(0, Math.min(100, ((tree.lng - (mapCenter.lng - 0.05)) / 0.1) * 100));
-                    const y = Math.max(0, Math.min(100, ((mapCenter.lat + 0.05 - tree.lat) / 0.1) * 100));
-                    
-                    return (
-                      <div
-                        key={tree.id}
-                        onClick={() => handleTreeClick(tree)}
-                        className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-200 hover:drop-shadow-2xl ${
-                          selectedTree?.id === tree.id ? 'scale-150 z-20 shadow-2xl' : 'hover:scale-125 hover:z-10'
-                        }`}
-                        style={{ left: `${x}%`, top: `${y}%` }}
-                      >
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-4 border-white ${getConditionColor(tree.condition).replace('text-white', '')}`}>
-                          <MapPin 
-                            className="text-white drop-shadow-md"
-                            size={selectedTree?.id === tree.id ? 20 : 16}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Zoom Controls */}
-              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-3 space-y-2 border border-white/50">
-                <button 
-                  onClick={() => setZoom(Math.min(zoom + 1, 18))}
-                  className="block w-12 h-12 bg-white rounded-xl hover:bg-green-50 hover:shadow-lg transition-all font-bold text-lg border border-gray-200 flex items-center justify-center"
-                >
-                  +
-                </button>
-                <button 
-                  onClick={() => setZoom(Math.max(zoom - 1, 8))}
-                  className="block w-12 h-12 bg-white rounded-xl hover:bg-green-50 hover:shadow-lg transition-all font-bold text-lg border border-gray-200 flex items-center justify-center"
-                >
-                  −
-                </button>
-              </div>
-
-              {/* Selected Tree Info */}
-              {selectedTree && (
-                <div className="absolute bottom-6 left-6 right-6 lg:right-auto lg:w-96 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 p-6 animate-in slide-in-from-bottom-4 duration-300">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${getConditionColor(selectedTree.condition)}`}>
-                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-800">{selectedTree.species}</h3>
-                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold mt-1 ${getConditionColor(selectedTree.condition)}`}>
-                          {selectedTree.condition}
-                        </div>
-                      </div>
-                    </div>
-                    <button 
-                      onClick={() => setSelectedTree(null)}
-                      className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
-                    >
-                      <X size={20} className="text-gray-500" />
-                    </button>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tree ID:</span>
-                        <span className="font-bold text-gray-900">{selectedTree.id}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Height:</span>
-                        <span className="font-bold text-green-700">{selectedTree.height}m</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Planted:</span>
-                        <span className="font-bold text-gray-900">{selectedTree.planted}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Diameter:</span>
-                        <span className="font-bold text-blue-700">{selectedTree.diameter}cm</span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="text-gray-600">Location:</span>
-                        <span className="font-bold text-gray-900">{selectedTree.address}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            <MapComponent 
+              filteredTrees={filteredTrees}
+              selectedTree={selectedTree}
+              onTreeSelect={handleTreeClick}
+              zoom={zoom}
+              onZoomChange={setZoom}
+              mapCenter={mapCenter}
+              getConditionColor={getConditionColor}
+            />
           )}
+
 
           {/* Dashboard View */}
           {currentView === 'dashboard' && (

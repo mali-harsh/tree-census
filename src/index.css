@@ -19,3 +19,28 @@ body {
 #root {
   height: 100vh;
 }
+/* Leaflet map overrides */
+.leaflet-control {
+  pointer-events: auto !important;
+  z-index: 10;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  user-select: none;
+}
+
+.leaflet-pane {
+  pointer-events: none;
+}
+
+.leaflet-marker-pane,
+.leaflet-popup-pane {
+  pointer-events: auto;
+}
+
+.leaflet-popup-close-button {
+  cursor: pointer;
+}
