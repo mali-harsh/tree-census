@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/tree-census/static/css/main.b010bf5a.css",
-    "main.js": "/tree-census/static/js/main.ea97efd0.js",
+    "main.css": "/tree-census/static/css/main.855baae4.css",
+    "main.js": "/tree-census/static/js/main.ac170bae.js",
     "index.html": "/tree-census/index.html",
-    "main.b010bf5a.css.map": "/tree-census/static/css/main.b010bf5a.css.map",
-    "main.ea97efd0.js.map": "/tree-census/static/js/main.ea97efd0.js.map"
+    "main.855baae4.css.map": "/tree-census/static/css/main.855baae4.css.map",
+    "main.ac170bae.js.map": "/tree-census/static/js/main.ac170bae.js.map"
   },
   "entrypoints": [
-    "static/css/main.b010bf5a.css",
-    "static/js/main.ea97efd0.js"
+    "static/css/main.855baae4.css",
+    "static/js/main.ac170bae.js"
   ]
 }
